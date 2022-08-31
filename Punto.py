@@ -5,7 +5,7 @@ class Punto():
         self.yCoordenade = yCoordenade
 
     def getXCoordenade(self):
-        return self.getXCoordenade()
+        return self.xCoordenade
 
     def getYCoordenade(self):
-        return self.getYCoordenade()
+        return self.yCoordenade
