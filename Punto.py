@@ -1,4 +1,6 @@
 class Punto():
+    xCoordenade = int()
+    yCoordenade = int()
 
     def __init__(self, xCoordenade, yCoordenade):
         self.xCoordenade = xCoordenade
@@ -9,3 +11,9 @@ class Punto():
 
     def getYCoordenade(self):
         return self.yCoordenade
+
+    def setXCoordenade(self, newXCoordenade):
+        self.xCoordenade = newXCoordenade
+
+    def setYCoordenade(self, newYCoordenade):
+        self.yCoordenade = newYCoordenade
