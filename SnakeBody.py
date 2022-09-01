@@ -6,23 +6,18 @@ class Snake():
 
     # ------------------------------Builder-----------------------------
     def __init__(self, punto):
-        self.puntx = Punto(punto.xCoordenade, punto.yCoordenade)
-        self.body.append(self.puntx)
+        self.body.append(punto)
 
     # ------------------------------Getters----------------------------
-    def getXPoint(self, index):
-        return self.body[index].getXCoordenade()
+    def getXPoint(self):
+        return self.body[0].getXCoordenade()
 
-    def getYPoint(self, index):
-        return self.body[index].getYCoordenade()
+    def getYPoint(self):
+        return self.body[0].getYCoordenade()
 
     # ----------------------------Feetself-----------------------------
-    def pickingUp(self, xCoordenade, yCoordenade):
-        weird = len(self.body) - 1
-        newHead = Punto(xCoordenade, yCoordenade)
-        while weird > 0:
-            self.body[weird] = self.body[weird - 1]
-        self.body[0].insert(0, newHead)
+    def pickingUp(self, newPoint):
+        self.body.insert(0, newPoint)
 
     # ------------------------------Movements--------------------------
     def moveRight(self):
@@ -40,4 +35,3 @@ class Snake():
     def moveDown(self):
         self.body.insert(0, Punto(self.body[0].getXCoordenade() + 1, self.body[0].getYCoordenade()))
         self.body.pop()
-    # --------------------------Snake Queue---------------------------

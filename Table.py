@@ -5,25 +5,29 @@ from Punto import *
 
 
 class Table():
-    XLEN = int(15)
-    YLEN = int(10)
+    XLEN = 15
+    YLEN = 10
     table = [[]]
-    EMPTY = int(0)
-    FOOD = int(2)
-    SNAKE = int(1)
+    EMPTY = 0
+    FOOD = 2
+    SNAKE = 1
 
     # --------------------------------------Booleans---------------------------------------------
-    def canUp(self):
-        return self.snakeBody.getXPoint(0) > 0
+    def __canUp(self):
+        return self.snakeBody.getXPoint() > 0 and self.table[self.snakeBody.getXPoint() - 1][
+            self.snakeBody.getYPoint()] != self.SNAKE
 
-    def canDown(self):
-        return self.snakeBody.getXPoint(0) < self.XLEN - 1
+    def __canDown(self):
+        return self.snakeBody.getXPoint() < self.XLEN - 1 and self.table[self.snakeBody.getXPoint() + 1][
+            self.snakeBody.getYPoint()] != self.SNAKE
 
-    def canLeft(self):
-        return self.snakeBody.getYPoint(0) > 0
+    def __canLeft(self):
+        return self.snakeBody.getYPoint() > 0 and self.table[self.snakeBody.getXPoint()][
+            self.snakeBody.getYPoint() - 1] != self.SNAKE
 
-    def canRight(self):
-        return self.snakeBody.getYPoint(0) < self.YLEN - 1
+    def __canRight(self):
+        return self.snakeBody.getYPoint() < self.YLEN - 1 and self.table[self.snakeBody.getXPoint()][
+            self.snakeBody.getYPoint() + 1] != self.SNAKE
 
     # -------------------------------Random Number generater-------------------
     def __randomXNumber(self):
@@ -33,45 +37,62 @@ class Table():
         return random.randrange(0, self.YLEN)
 
     # ----------------------------------Snake actions-------------------------------------------
-    def moveSnakeRight(self):
-        self.snakeBody.moveRight()
-        self.putValues()
+    def __moveSnakeRight(self):
+        if self.table[self.snakeBody.getXPoint()][self.snakeBody.getYPoint() + 1] == self.FOOD:
+            self.snakeBody.pickingUp(Punto(self.snakeBody.getXPoint(), self.snakeBody.getYPoint() + 1))
+            self.__foodGenerator()
+        else:
+            self.snakeBody.moveRight()
+        self.__putValues()
 
-    def moveSnakeLeft(self):
-        self.snakeBody.moveLeft()
-        self.putValues()
+    def __moveSnakeLeft(self):
+        if self.table[self.snakeBody.getXPoint()][self.snakeBody.getYPoint() - 1] == self.FOOD:
+            self.snakeBody.pickingUp(Punto(self.snakeBody.getXPoint(), self.snakeBody.getYPoint() - 1))
+            self.__foodGenerator()
+        else:
+            self.snakeBody.moveLeft()
+        self.__putValues()
 
-    def moveSnakeUp(self):
-        self.snakeBody.moveUp()
-        self.putValues()
+    def __moveSnakeUp(self):
+        if self.table[self.snakeBody.getXPoint() - 1][self.snakeBody.getYPoint()] == self.FOOD:
+            self.snakeBody.pickingUp(Punto(self.snakeBody.getXPoint() - 1, self.snakeBody.getYPoint()))
+            self.__foodGenerator()
+        else:
+            self.snakeBody.moveUp()
+        self.__putValues()
 
-    def moveSnakeDown(self):
-        self.snakeBody.moveDown()
-        self.putValues()
+    def __moveSnakeDown(self):
+        if self.table[self.snakeBody.getXPoint() + 1][self.snakeBody.getYPoint()] == self.FOOD:
+            self.snakeBody.pickingUp(Punto(self.snakeBody.getXPoint() + 1, self.snakeBody.getYPoint()))
+            self.__foodGenerator()
+        else:
+            self.snakeBody.moveDown()
+        self.__putValues()
 
     # -------------------------------------Put snake---------------------------------------------
-    def putValues(self):
-        self.generaTeTable()
+    def __putValues(self):
+        self.__generaTeTable()
         count = 0
         while count < len(self.snakeBody.body):
-            self.table[self.snakeBody.getXPoint(count)][self.snakeBody.getYPoint(count)] = self.SNAKE
+            self.table[self.snakeBody.body[count].getXCoordenade()][
+                self.snakeBody.body[count].getYCoordenade()] = self.SNAKE
             count += 1
 
     # -------------------------------------Controller--------------------------------------------
     def controller(self, direction):
-        if direction == "w" and self.canUp():
-            self.moveSnakeUp()
-        elif direction == 's' and self.canDown():
-            self.moveSnakeDown()
-        elif direction == 'a' and self.canLeft():
-            self.moveSnakeLeft()
-        elif direction == 'd' and self.canRight():
-            self.moveSnakeRight()
+        if direction == "w" and self.__canUp():
+            self.__moveSnakeUp()
+        elif direction == 's' and self.__canDown():
+            self.__moveSnakeDown()
+        elif direction == 'a' and self.__canLeft():
+            self.__moveSnakeLeft()
+        elif direction == 'd' and self.__canRight():
+            self.__moveSnakeRight()
         else:
             print("Error")
 
     # -----------------------------------------Builder--------------------------------------------
-    def generaTeTable(self):
+    def __generaTeTable(self):
         for i in range(self.XLEN):
             for j in range(self.YLEN):
                 if self.table[i][j] != self.FOOD:
@@ -81,7 +102,7 @@ class Table():
         newPoint = Punto(self.__randomXNumber(), self.__randomYNumber())
         self.snakeBody = Snake(newPoint)
         print("creada la serpiente")
-        self.putValues()
+        self.__putValues()
         print("Insertada la serpiente")
 
     def __init__(self):
