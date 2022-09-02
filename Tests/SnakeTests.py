@@ -50,12 +50,12 @@ class MyTestCase(unittest.TestCase):
     def test_pickingUp_growArray_return_True(self):
         punto = Punto(self.xValue + 1, self.yValue)
         self.snake.pickingUp(punto)
-        self.assertEqual(2, len(self.snake.body))
+        self.assertTrue(2== len(self.snake.body))
 
     def test_pickingUp_growArray_return_False(self):
         newpunto = Punto(self.xValue + 1, self.yValue)
         self.snake.pickingUp(newpunto)
-        self.assertNotEqual(1, len(self.snake.body))
+        self.assertFalse(1== len(self.snake.body))
 
     def test_moveRight_Snake_len(self):
         self.snake.moveRight()
