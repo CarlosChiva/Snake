@@ -6,14 +6,14 @@ from SnakeBody import Snake
 
 
 class MyTestCase(unittest.TestCase):
-    puntoFood = Punto(1, 1)
     puntoSnake = Punto(7, 7)
     POINTNW = Punto(0, 0)
     POINTSE = Punto(14, 9)
 
     def setUp(self):
         snake = Snake(self.puntoSnake)
-        self.table = Table(self.puntoFood, snake)
+        self.table = Table(snake)
+        self.pointFood = self.table.puntoFood
 
     # --------------------------------- len to table
     def test_len_X(self):
@@ -82,6 +82,61 @@ class MyTestCase(unittest.TestCase):
         leftOfSnake = Punto(7, 6)
         self.table.snakeBody.pickingUp(leftOfSnake)
         self.assertFalse(self.table.canRight())
+
+    # -----------------------------------------EAT FOOD
+    def test_moveUpSnake_Food(self):
+        expected = self.table.source + 100
+        down_of_Food = Punto(self.table.puntoFood.getXCoordenade() + 1, self.table.puntoFood.getYCoordenade())
+        self.table.snakeBody.pickingUp(down_of_Food)
+        self.table.moveSnakeUp()
+        self.assertTrue(self.table.source == expected)
+
+    def test_moveDownSnake_Food(self):
+        expected = self.table.source + 100
+        up_of_Food = Punto(self.table.puntoFood.getXCoordenade() - 1, self.table.puntoFood.getYCoordenade())
+        self.table.snakeBody.pickingUp(up_of_Food)
+        self.table.moveSnakeDown()
+        self.assertTrue(self.table.source == expected)
+
+    def test_moveLeftSnake_Food(self):
+        expected = self.table.source + 100
+        right_of_Food = Punto(self.table.puntoFood.getXCoordenade(), self.table.puntoFood.getYCoordenade() + 1)
+        self.table.snakeBody.pickingUp(right_of_Food)
+        self.table.moveSnakeLeft()
+        self.assertTrue(self.table.source == expected)
+
+    def test_moveRightSnake_Food(self):
+        expected = self.table.source + 100
+        left_of_Food = Punto(self.table.puntoFood.getXCoordenade(), self.table.puntoFood.getYCoordenade() - 1)
+        self.table.snakeBody.pickingUp(left_of_Food)
+        self.table.moveSnakeRight()
+        self.assertTrue(self.table.source == expected)
+
+    # ----------------------------------------------Movement
+    def test_moveRightSnake(self):
+        expected = Punto(self.table.snakeBody.getXPoint(), self.table.snakeBody.getYPoint() + 1)
+        self.table.moveSnakeRight()
+        actual = Punto(self.table.snakeBody.getXPoint(), self.table.snakeBody.getYPoint())
+        self.assertTrue(
+            expected.getXCoordenade() == actual.getXCoordenade() and expected.getYCoordenade() == actual.getYCoordenade())
+
+    def test_moveLeftSnake(self):
+        expected = Punto(self.table.snakeBody.getXPoint(), self.table.snakeBody.getYPoint() - 1)
+        self.table.moveSnakeLeft()
+        actual = Punto(self.table.snakeBody.getXPoint(), self.table.snakeBody.getYPoint())
+        self.assertTrue(
+            expected.getXCoordenade() == actual.getXCoordenade() and expected.getYCoordenade() == actual.getYCoordenade())
+    def test_moveUpSnake(self):
+        expected = Punto(self.table.snakeBody.getXPoint()-1, self.table.snakeBody.getYPoint())
+        self.table.moveSnakeUp()
+        actual = Punto(self.table.snakeBody.getXPoint(), self.table.snakeBody.getYPoint())
+        self.assertTrue(expected.getXCoordenade() == actual.getXCoordenade() and expected.getYCoordenade() == actual.getYCoordenade())
+    def test_moveDownSnake(self):
+        expected = Punto(self.table.snakeBody.getXPoint()+1, self.table.snakeBody.getYPoint())
+        self.table.moveSnakeDown()
+        actual = Punto(self.table.snakeBody.getXPoint(), self.table.snakeBody.getYPoint())
+        self.assertTrue(
+            expected.getXCoordenade() == actual.getXCoordenade() and expected.getYCoordenade() == actual.getYCoordenade())
 
 
 if __name__ == '__main__':
