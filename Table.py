@@ -11,23 +11,45 @@ class Table():
     EMPTY = 0
     FOOD = 2
     SNAKE = 1
+    source = 0
+    game_Over = False
+    def snakeXCord(self):
+        return self.snakeBody.getXPoint()
 
+    def snakeYCord(self):
+        return self.snakeBody.getYPoint()
+
+    def __sumScore(self):
+        self.source += 100
     # --------------------------------------Booleans---------------------------------------------
+
+    def __checkThereAreSnake(self, xCoordenade, yCoordenade):
+        return self.table[xCoordenade][yCoordenade] != self.SNAKE
+
+    def __checkThereIsFood(self, xCoordenade, yCoordenade):
+        return self.table[xCoordenade][yCoordenade] == self.FOOD
+
     def __canUp(self):
-        return self.snakeBody.getXPoint() > 0 and self.table[self.snakeBody.getXPoint() - 1][
-            self.snakeBody.getYPoint()] != self.SNAKE
+        checkX = self.snakeXCord() - 1
+        checkY = self.snakeYCord()
+        return self.snakeXCord() > 0 and self.__checkThereAreSnake(checkX, checkY)
 
     def __canDown(self):
-        return self.snakeBody.getXPoint() < self.XLEN - 1 and self.table[self.snakeBody.getXPoint() + 1][
-            self.snakeBody.getYPoint()] != self.SNAKE
+        checkX = self.snakeXCord() + 1
+        checkY = self.snakeYCord()
+        return self.snakeXCord() < self.XLEN - 1 and self.__checkThereAreSnake(checkX, checkY)
 
     def __canLeft(self):
-        return self.snakeBody.getYPoint() > 0 and self.table[self.snakeBody.getXPoint()][
-            self.snakeBody.getYPoint() - 1] != self.SNAKE
+
+        checkX = self.snakeXCord()
+        checkY = self.snakeYCord() - 1
+        return self.snakeYCord() > 0 and self.__checkThereAreSnake(checkX, checkY)
 
     def __canRight(self):
-        return self.snakeBody.getYPoint() < self.YLEN - 1 and self.table[self.snakeBody.getXPoint()][
-            self.snakeBody.getYPoint() + 1] != self.SNAKE
+
+        checkX = self.snakeXCord()
+        checkY = self.snakeYCord() + 1
+        return self.snakeYCord() < self.YLEN - 1 and self.__checkThereAreSnake(checkX, checkY)
 
     # -------------------------------Random Number generater-------------------
     def __randomXNumber(self):
@@ -38,32 +60,36 @@ class Table():
 
     # ----------------------------------Snake actions-------------------------------------------
     def __moveSnakeRight(self):
-        if self.table[self.snakeBody.getXPoint()][self.snakeBody.getYPoint() + 1] == self.FOOD:
-            self.snakeBody.pickingUp(Punto(self.snakeBody.getXPoint(), self.snakeBody.getYPoint() + 1))
+        if self.__checkThereIsFood(self.snakeXCord(), self.snakeYCord() + 1):
+            self.snakeBody.pickingUp(Punto(self.snakeXCord(), self.snakeYCord() + 1))
+            self.__sumScore()
             self.__foodGenerator()
         else:
             self.snakeBody.moveRight()
         self.__putValues()
 
     def __moveSnakeLeft(self):
-        if self.table[self.snakeBody.getXPoint()][self.snakeBody.getYPoint() - 1] == self.FOOD:
-            self.snakeBody.pickingUp(Punto(self.snakeBody.getXPoint(), self.snakeBody.getYPoint() - 1))
+        if self.__checkThereIsFood(self.snakeXCord(), self.snakeYCord() - 1):
+            self.snakeBody.pickingUp(Punto(self.snakeXCord(), self.snakeYCord() - 1))
+            self.__sumScore()
             self.__foodGenerator()
         else:
             self.snakeBody.moveLeft()
         self.__putValues()
 
     def __moveSnakeUp(self):
-        if self.table[self.snakeBody.getXPoint() - 1][self.snakeBody.getYPoint()] == self.FOOD:
-            self.snakeBody.pickingUp(Punto(self.snakeBody.getXPoint() - 1, self.snakeBody.getYPoint()))
+        if self.__checkThereIsFood(self.snakeXCord() - 1, self.snakeYCord()):
+            self.snakeBody.pickingUp(Punto(self.snakeXCord() - 1, self.snakeYCord()))
+            self.__sumScore()
             self.__foodGenerator()
         else:
             self.snakeBody.moveUp()
         self.__putValues()
 
     def __moveSnakeDown(self):
-        if self.table[self.snakeBody.getXPoint() + 1][self.snakeBody.getYPoint()] == self.FOOD:
-            self.snakeBody.pickingUp(Punto(self.snakeBody.getXPoint() + 1, self.snakeBody.getYPoint()))
+        if self.__checkThereIsFood(self.snakeXCord() + 1, self.snakeYCord()):
+            self.snakeBody.pickingUp(Punto(self.snakeXCord() + 1, self.snakeYCord()))
+            self.__sumScore()
             self.__foodGenerator()
         else:
             self.snakeBody.moveDown()
@@ -89,7 +115,13 @@ class Table():
         elif direction == 'd' and self.__canRight():
             self.__moveSnakeRight()
         else:
-            print("Error")
+            self.gameOver()
+
+    # ---------------------------------------------Game Over--------------------------------------
+    def gameOver(self):
+        self.game_Over = True
+        print("Game Over")
+        print("Your source: " + str(self.source))
 
     # -----------------------------------------Builder--------------------------------------------
     def __generaTeTable(self):
@@ -110,7 +142,6 @@ class Table():
         print("Creado el tablero")
         self.__putSnake()
         self.__foodGenerator()
-
 
     # ---------------------------------------Food generator--
     def __foodGenerator(self):

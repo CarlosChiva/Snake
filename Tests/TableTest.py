@@ -15,6 +15,9 @@ class MyTestCase(unittest.TestCase):
         self.table = Table(snake)
         self.pointFood = self.table.puntoFood
 
+    def tearDown(self):
+        self.table.snakeBody.body.clear()
+
     # --------------------------------- len to table
     def test_len_X(self):
         self.assertEqual(15, self.table.XLEN)  # add assertion here
@@ -126,17 +129,96 @@ class MyTestCase(unittest.TestCase):
         actual = Punto(self.table.snakeBody.getXPoint(), self.table.snakeBody.getYPoint())
         self.assertTrue(
             expected.getXCoordenade() == actual.getXCoordenade() and expected.getYCoordenade() == actual.getYCoordenade())
+
     def test_moveUpSnake(self):
-        expected = Punto(self.table.snakeBody.getXPoint()-1, self.table.snakeBody.getYPoint())
+        expected = Punto(self.table.snakeBody.getXPoint() - 1, self.table.snakeBody.getYPoint())
         self.table.moveSnakeUp()
         actual = Punto(self.table.snakeBody.getXPoint(), self.table.snakeBody.getYPoint())
-        self.assertTrue(expected.getXCoordenade() == actual.getXCoordenade() and expected.getYCoordenade() == actual.getYCoordenade())
+        self.assertTrue(
+            expected.getXCoordenade() == actual.getXCoordenade() and expected.getYCoordenade() == actual.getYCoordenade())
+
     def test_moveDownSnake(self):
-        expected = Punto(self.table.snakeBody.getXPoint()+1, self.table.snakeBody.getYPoint())
+        expected = Punto(self.table.snakeBody.getXPoint() + 1, self.table.snakeBody.getYPoint())
         self.table.moveSnakeDown()
         actual = Punto(self.table.snakeBody.getXPoint(), self.table.snakeBody.getYPoint())
         self.assertTrue(
             expected.getXCoordenade() == actual.getXCoordenade() and expected.getYCoordenade() == actual.getYCoordenade())
+
+    # -----------------------------Checkers Food and Snake------------------------------
+    def test_CheckAreThereSnake_returnTrue(self):
+        x = self.table.snakeXCord()
+        y = self.table.snakeYCord()
+        self.assertTrue(self.table.checkThereAreSnake(x, y))
+
+    def test_CheckAreThereSnake_returnFalse(self):
+        x = self.table.snakeXCord() - 1
+        y = self.table.snakeYCord() + 1
+        self.assertFalse(self.table.checkThereAreSnake(x, y))
+
+    def test_CheckIsThereFood_returnFalse(self):
+        x = self.table.snakeBody.getXPoint()
+        y = self.table.snakeBody.getYPoint()
+        self.assertFalse(self.table.checkThereIsFood(x, y))
+
+    def test_CheckIsThereFood_returnTrue(self):
+        x = self.table.puntoFood.getXCoordenade()
+        y = self.table.puntoFood.getYCoordenade()
+        self.assertTrue(self.table.checkThereIsFood(x, y))
+
+    def test_sumScore(self):
+        n = self.table.source
+        self.table.sumScore()
+        self.assertTrue(n + 100 == self.table.source)
+
+    def test_snakeXCord(self):
+        self.assertTrue(self.table.snakeXCord() == self.table.snakeBody.getXPoint())
+
+    def test_snakeYCord(self):
+        self.assertTrue(self.table.snakeYCord() == self.table.snakeBody.getYPoint())
+
+    # -------------------------------Game Over----------------------
+    def test_gameover_returnFalse(self):
+        self.assertFalse(self.table.game_Over)
+
+    def test_gameover_returnTrue_OutOfTable_Left(self):
+        self.table.snakeBody.pickingUp(self.POINTNW)
+        self.table.controller('a')
+        self.assertTrue(self.table.game_Over)
+
+    def test_gameover_returnTrue_OutOfTable_Up(self):
+        self.table.snakeBody.pickingUp(self.POINTNW)
+        self.table.controller('w')
+        self.assertTrue(self.table.game_Over)
+
+    def test_gameover_returnTrue_OutOfTable_right(self):
+        self.table.snakeBody.pickingUp(self.POINTSE)
+        self.table.controller('d')
+        self.assertTrue(self.table.game_Over)
+
+    def test_gameover_returnTrue_OutOfTable_down(self):
+        self.table.snakeBody.pickingUp(self.POINTSE)
+        self.table.controller('s')
+        self.assertTrue(self.table.game_Over)
+
+    def test_gameOver_returnTrue_Snake_left(self):
+        self.table.snakeBody.pickingUp(Punto(self.table.snakeXCord(), self.table.snakeYCord() + 1))
+        self.table.controller('a')
+        self.assertTrue(self.table.game_Over)
+
+    def test_gameOver_returnTrue_Snake_right(self):
+        self.table.snakeBody.pickingUp(Punto(self.table.snakeXCord(), self.table.snakeYCord() - 1))
+        self.table.controller('d')
+        self.assertTrue(self.table.game_Over)
+
+    def test_gameOver_returnTrue_Snake_up(self):
+        self.table.snakeBody.pickingUp(Punto(self.table.snakeXCord()+1, self.table.snakeYCord() ))
+        self.table.controller('w')
+        self.assertTrue(self.table.game_Over)
+
+    def test_gameOver_returnTrue_Snake_down(self):
+        self.table.snakeBody.pickingUp(Punto(self.table.snakeXCord()-1, self.table.snakeYCord()))
+        self.table.controller('s')
+        self.assertTrue(self.table.game_Over)
 
 
 if __name__ == '__main__':

@@ -3,7 +3,9 @@ import Table
 table = Table.Table()
 table.printTable()
 control = input("Choose: ")
-while control != 'q':
+while not table.game_Over:
     table.controller(control)
+    if table.game_Over:
+        break
     table.printTable()
     control = input("Choose: ")
