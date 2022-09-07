@@ -13,6 +13,8 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="SnakeBody.Snake.destroy" />
+          <option value="Interface.Principal.secondFrame" />
+          <option value="Interface.Principal.self" />
         </list>
       </option>
     </inspection_tool>
