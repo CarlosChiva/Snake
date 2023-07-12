@@ -1,7 +1,7 @@
 import random
 
-from ..Punto import *
-from ..SnakeBody import Snake
+from Punto import Punto
+from SnakeBody import Snake
 
 class Table():
     XLEN = 15

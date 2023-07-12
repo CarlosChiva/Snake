@@ -1,6 +1,6 @@
 import unittest
-from ..Punto import Punto
-from ..SnakeBody import Snake
+from Punto import Punto
+from SnakeBody import Snake
 from .TableCheck import Table
 
 
