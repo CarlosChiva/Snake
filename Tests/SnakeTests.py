@@ -17,15 +17,15 @@ class MyTestCase(unittest.TestCase):
         print("----------------Siguiente prueba---------------")
 
     def test_getXpoint_onePoint(self):
-        self.assertEqual(self.xValue, self.snake.getXPoint())
+        self.assertEqual(self.snake.getXPoint(0),self.xValue)
 
     def test_getXpoint_moreThanOnePoint(self):
         punto = Punto(self.xValue + 1, self.yValue)
         self.snake.pickingUp(punto)
-        self.assertEqual(punto.getXCoordenade(), self.snake.body[0].getXCoordenade())
+        self.assertEqual(punto.getXCoordenade(), self.snake.getXPoint(0))
 
     def test_getYpoint_onePoint(self):
-        self.assertEqual(self.yValue, self.snake.getYPoint())
+        self.assertEqual(self.yValue, self.snake.getYPoint(0))
 
     def test_getYpoint_moreThanOnePoint(self):
         punto = Punto(self.xValue, self.yValue + 1)
@@ -35,12 +35,12 @@ class MyTestCase(unittest.TestCase):
     def test_pickingUp_XCoordenade(self):
         punto = Punto(self.xValue + 1, self.yValue)
         self.snake.pickingUp(punto)
-        self.assertEqual(punto.getXCoordenade(), self.snake.getXPoint())
+        self.assertEqual(punto.getXCoordenade(), self.snake.getXPoint(0))
 
     def test_pickingUp_YCoordenade(self):
         punto = Punto(self.xValue, self.yValue + 1)
         self.snake.pickingUp(punto)
-        self.assertEqual(punto.getYCoordenade(), self.snake.getYPoint())
+        self.assertEqual(punto.getYCoordenade(), self.snake.getYPoint(0))
 
     def test_pickingUp_notFirstPoint(self):
         punto = Punto(self.xValue + 1, self.yValue)
@@ -62,24 +62,24 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(1, len(self.snake.body))
 
     def test_moveRight_Snake_yCoordenade(self):
-        yCoordenade = self.snake.getYPoint()
+        yCoordenade = self.snake.getYPoint(0)
         self.snake.moveRight()
-        self.assertEqual(yCoordenade + 1, self.snake.getYPoint())
+        self.assertEqual(yCoordenade + 1, self.snake.getYPoint(0))
 
     def test_moveLeft_Snake_yCoordenade(self):
-        yCoordenade = self.snake.getYPoint()
+        yCoordenade = self.snake.getYPoint(0)
         self.snake.moveLeft()
-        self.assertEqual(yCoordenade - 1, self.snake.getYPoint())
+        self.assertEqual(yCoordenade - 1, self.snake.getYPoint(0))
 
     def test_moveUp_Snake_xCoordenade(self):
-        xCoordenade = self.snake.getXPoint()
+        xCoordenade = self.snake.getXPoint(0)
         self.snake.moveUp()
-        self.assertEqual(xCoordenade - 1, self.snake.getXPoint())
+        self.assertEqual(xCoordenade - 1, self.snake.getXPoint(0))
 
     def test_moveDown_Snake_xCoordenade(self):
-        xCoordenade = self.snake.getXPoint()
+        xCoordenade = self.snake.getXPoint(0)
         self.snake.moveDown()
-        self.assertEqual(xCoordenade + 1, self.snake.getXPoint())
+        self.assertEqual(xCoordenade + 1, self.snake.getXPoint(0))
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 import unittest
 
-from Punto import Punto
+from ..Punto import Punto
 
 
 class MyTestCase(unittest.TestCase):

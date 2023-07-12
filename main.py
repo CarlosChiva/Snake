@@ -1,6 +1,6 @@
-import Table
+from Table import *
 
-table = Table.Table()
+table = Table()
 table.printTable()
 control = input("Choose: ")
 while not table.game_Over:

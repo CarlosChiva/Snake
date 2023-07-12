@@ -1,4 +1,4 @@
-from Punto import *
+from Punto import Punto
 
 
 class Snake():
@@ -6,32 +6,34 @@ class Snake():
 
     # ------------------------------Builder-----------------------------
     def __init__(self, punto):
-        self.body.append(punto)
+        if isinstance(punto,Punto):
+            self.body.append(punto)
+        else:
+            pass   
 
     # ------------------------------Getters----------------------------
-    def getXPoint(self):
-        return self.body[0].getXCoordenade()
+    def getXPoint(self, index):
+       return self.body[index].getXCoordenade()
 
-    def getYPoint(self):
-        return self.body[0].getYCoordenade()
-
+    def getYPoint(self,index):
+       return self.body[index].getYCoordenade()
     # ----------------------------Feetself-----------------------------
     def pickingUp(self, newPoint):
         self.body.insert(0, newPoint)
 
     # ------------------------------Movements--------------------------
     def moveRight(self):
-        self.body.insert(0, Punto(self.body[0].getXCoordenade(), self.body[0].getYCoordenade() + 1))
+        self.body.insert(0, Punto(self.getXPoint(0), self.getYPoint(0) + 1))
         self.body.pop()
 
     def moveLeft(self):
-        self.body.insert(0, Punto(self.body[0].getXCoordenade(), self.body[0].getYCoordenade() - 1))
+        self.body.insert(0, Punto(self.getXPoint(0), self.getYPoint(0) - 1))
         self.body.pop()
 
     def moveUp(self):
-        self.body.insert(0, Punto(self.body[0].getXCoordenade() - 1, self.body[0].getYCoordenade()))
+        self.body.insert(0, Punto(self.getXPoint(0) - 1,  self.getYPoint(0)))
         self.body.pop()
 
     def moveDown(self):
-        self.body.insert(0, Punto(self.body[0].getXCoordenade() + 1, self.body[0].getYCoordenade()))
+        self.body.insert(0, Punto(self.getXPoint(0) + 1, self.getYPoint(0)))
         self.body.pop()
