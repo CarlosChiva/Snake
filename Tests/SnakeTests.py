@@ -1,4 +1,6 @@
 import unittest
+import sys
+sys.path.append("..")
 from SnakeBody import Snake
 from Punto import Punto
 
