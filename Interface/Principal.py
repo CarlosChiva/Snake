@@ -1,6 +1,7 @@
 from tkinter import *
+import sys
+sys.path.append("..")
 from Table import Table
-
 def buildGame():
         table = Table()
         frame1.destroy()

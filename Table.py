@@ -63,6 +63,9 @@ class Table():
 
     def __sumScore(self):
         self.source += 100
+    # --------------------------------------getter---------------------------------------------
+    def getTable(self):
+        return self.table
     # --------------------------------------Booleans---------------------------------------------
 
     def __checkThereAreSnake(self, xCoordenade, yCoordenade):
