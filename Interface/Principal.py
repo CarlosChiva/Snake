@@ -1,14 +1,14 @@
-from tkinter import *
 import sys
 sys.path.append("..")
-from Table import Table
+from tkinter import *
+import Table as game
 def buildGame():
-        table = Table()
+        Table = game()
         frame1.destroy()
         frame2.destroy()
-        table = Frame(root, width=700, height=500, background="green")
-        table.pack(expand=True, fill='both')
-        canvas = Canvas(table, width=400, height=400, bg="black")
+        tabl = Frame(root, width=700, height=500, background="green")
+        tabl.pack(expand=True, fill='both')
+        canvas = Canvas(tabl, width=400, height=400, bg="black")
         canvas.pack(expand=True)
         # Dibujar el recuadro del juego
         canvas.create_rectangle(50, 50, 350, 350, outline="white")
@@ -31,4 +31,3 @@ newGameButton3.grid(row=100, column=2, pady=20, padx=10)
 frame1.pack()
 frame2.pack()
 root.mainloop()
-
