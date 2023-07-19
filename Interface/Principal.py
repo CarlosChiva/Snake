@@ -1,5 +1,6 @@
-from ..clases.clases import Table
 from tkinter import *
+
+from clases.clases import Table
 def buildGame():
         table = Table()
         frame1.destroy()
