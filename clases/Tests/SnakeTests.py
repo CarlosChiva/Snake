@@ -1,9 +1,6 @@
 import unittest
-import sys
-sys.path.append("..")
-from SnakeBody import Snake
-from Punto import Punto
 
+from data_class import Punto, SnakeBody
 
 class MyTestCase(unittest.TestCase):
     xValue = 3

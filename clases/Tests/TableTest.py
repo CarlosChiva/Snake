@@ -1,8 +1,7 @@
 import unittest
-import sys
-sys.path.append("..")
-from Punto import Punto
-from SnakeBody import Snake
+
+from ..Punto import Punto
+from ..SnakeBody import Snake
 from .TableCheck import Table
 
 

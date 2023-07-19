@@ -1,9 +1,11 @@
 import sys
+
+from clases.data_class import Table
 sys.path.append("..")
 from tkinter import *
-import Table as game
+from ..clases import *
 def buildGame():
-        Table = game()
+        table = Table()
         frame1.destroy()
         frame2.destroy()
         tabl = Frame(root, width=700, height=500, background="green")

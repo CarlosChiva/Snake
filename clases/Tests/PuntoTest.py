@@ -1,6 +1,4 @@
 import unittest
-import sys
-sys.path.append("..")
 from Punto import Punto
 
 
