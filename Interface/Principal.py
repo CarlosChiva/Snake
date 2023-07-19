@@ -8,8 +8,20 @@ def buildGame():
         tabl.pack(expand=True, fill='both')
         canvas = Canvas(tabl, width=400, height=400, bg="black")
         canvas.pack(expand=True)
-        # Dibujar el recuadro del juego
-        canvas.create_rectangle(50, 50, 350, 350, outline="white")
+        table.draw_table(canvas)
+        table.printTable()
+        def event(event):
+                key = event.keysym
+                if key == "Up":
+                        table.controller("w")
+                elif key == "Down":
+                        table.controller("s")
+                elif key == "Left":
+                        table.controller("a")
+                elif key == "Right":
+                        table.controller("d")
+        root.bind("<KeyPress>",event)
+                        
 root = Tk()
 root.title("Snake")
 #root.iconbitmap("/home/dread/VsCode/Snake/Interface/snake.ico")
