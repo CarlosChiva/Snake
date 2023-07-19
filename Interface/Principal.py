@@ -1,9 +1,5 @@
-import sys
-
-from clases.data_class import Table
-sys.path.append("..")
+from ..clases.clases import Table
 from tkinter import *
-from ..clases import *
 def buildGame():
         table = Table()
         frame1.destroy()

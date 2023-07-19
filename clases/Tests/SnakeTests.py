@@ -1,6 +1,7 @@
 import unittest
 
-from data_class import Punto, SnakeBody
+from ..clases import Punto
+from ..clases import Snake
 
 class MyTestCase(unittest.TestCase):
     xValue = 3
