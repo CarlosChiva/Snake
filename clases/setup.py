@@ -7,5 +7,5 @@ setup(
     author="carlos chiva",
     author_email="cxhiva@gmail.com",
     url="",
-    packages= ["clases"]
+    packages= ["."]
 )

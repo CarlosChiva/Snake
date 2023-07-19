@@ -1,6 +1,5 @@
 from tkinter import *
-
-from clases.clases import Table
+from clases import Table
 def buildGame():
         table = Table()
         frame1.destroy()
