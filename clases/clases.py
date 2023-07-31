@@ -76,10 +76,10 @@ class Table():
         self.__foodGenerator()
 
     def draw_table(self, canvas):
-        cell_width = int(400 / self.YLEN)
-        cell_height = int(400 / self.XLEN)
-        for y in range(15):
-            for x in range(10):
+        cell_width = int(450 / self.YLEN)
+        cell_height = int(450 / self.XLEN)
+        for y in range(self.XLEN):
+            for x in range(self.YLEN):
                 cell_value = self.table[y][x]
                 color = "black"  # Por defecto, color negro (celda vacía)
                 if cell_value == self.SNAKE:

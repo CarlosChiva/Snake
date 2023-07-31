@@ -1,6 +1,6 @@
 from tkinter import Canvas, Frame
 from clases import Table
-
+import time
 
 class Game():
    
@@ -8,24 +8,24 @@ class Game():
        self.key = ""
        self.table =Table()
        self.root = root
-       tabl = Frame(self.root, width=700, height=500, background="green")
-       tabl.pack(expand=True, fill='both')
-       self.canvas = Canvas(tabl, width=400, height=400, bg="black")
+       self.tabl = Frame(self.root, width=700, height=500, background="green")
+       self.tabl.pack(expand=True, fill='both')
+       self.canvas = Canvas(self.tabl, width=350, height=350, bg="black")
+       self.canvas.place(anchor="nw")
        self.canvas.pack(expand=True)
        self.table.draw_table(self.canvas)
        self.table.printTable()
        self.game() 
    def game(self):
        self.root.bind('<Key>',self.event)
-       self.root.mainloop()
-           
+       
    def event(self,event):
        self.key = event.keysym
-       if self.key == "Up":
+       if self.key == "Up" and self.table.game_Over == False:
             self.table.controller("w")
             self.table.printTable()
             self.table.draw_table(self.canvas)
-            print("Pa rriba")
+            print(self.table.game_Over)
        elif self.key == "Down":
             self.table.controller("s")
             self.table.printTable()
@@ -41,3 +41,5 @@ class Game():
             self.table.printTable()
             self.table.draw_table(self.canvas)
             print("Pa rriba")
+   def gameOver(self):
+        self.tabl.destroy
