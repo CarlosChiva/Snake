@@ -1,26 +1,9 @@
 from tkinter import *
-from clases import Table
+from Game import Game
 def buildGame():
-        table = Table()
         frame1.destroy()
         frame2.destroy()
-        tabl = Frame(root, width=700, height=500, background="green")
-        tabl.pack(expand=True, fill='both')
-        canvas = Canvas(tabl, width=400, height=400, bg="black")
-        canvas.pack(expand=True)
-        table.draw_table(canvas)
-        table.printTable()
-        def event(event):
-                key = event.keysym
-                if key == "Up":
-                        table.controller("w")
-                elif key == "Down":
-                        table.controller("s")
-                elif key == "Left":
-                        table.controller("a")
-                elif key == "Right":
-                        table.controller("d")
-        root.bind("<KeyPress>",event)
+        game = Game(root)     
                         
 root = Tk()
 root.title("Snake")
