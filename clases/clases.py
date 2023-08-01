@@ -75,26 +75,6 @@ class Table():
         self.__putSnake()
         self.__foodGenerator()
 
-    def draw_table(self, canvas):
-        cell_width = int(450 / self.YLEN)
-        cell_height = int(450 / self.XLEN)
-        for y in range(self.XLEN):
-            for x in range(self.YLEN):
-                cell_value = self.table[y][x]
-                color = "black"  # Por defecto, color negro (celda vacía)
-                if cell_value == self.SNAKE:
-                    color = "white"  # Color blanco para representar la serpiente
-                elif cell_value == self.FOOD:
-                    color = "red"  # Color rojo para representar la comida
-
-                canvas.create_rectangle(
-                    x * cell_width + 50,
-                    y * cell_height + 50,
-                    (x + 1) * cell_width + 50,
-                    (y + 1) * cell_height + 50,
-                    outline=color,
-                    fill=color,
-                )
 
     def __generaTeTable(self):
         for i in range(self.XLEN):
