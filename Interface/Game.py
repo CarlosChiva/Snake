@@ -2,29 +2,35 @@ from tkinter import Canvas, Frame, Tk
 import tkinter
 from clases import Table
 import time
+from scores import Scores
+import threading
 
 class Game():
-   
+   canvas_width= 450
+   canvas_height= 450
    def __init__(self,root):
         self.key = ""
+        self.last_direction = ""
+        self.last_direction_lock = threading.Lock()  # Crear un objeto de bloqueo
+        self.generate_moves_thread = None
         self.score = 0
         self.table = Table()
         self.root = root
     # main frame
         self.main_frame = Frame(self.root, bg="green")
         self.main_frame.grid(row=0, column=0, sticky="nsew")
-    
+        self.main_frame.grid_propagate(True) 
     # canvas frame
-        self.canvas_frame = Frame(self.main_frame, bg="green")
+        self.canvas_frame = Frame(self.main_frame, width=self.canvas_width, height=self.canvas_height, bg="green")
         self.canvas_frame.grid(row=0, column=0, sticky="nsew")
     
     # canvas
-        self.canvas = Canvas(self.canvas_frame, width=450, height=450, bg="green")
-        self.canvas.grid(row=0, column=0, sticky="nsew")
+        self.canvas = Canvas(self.canvas_frame, width=self.canvas_width, height=self.canvas_height, bg="green")
+        self.canvas.grid(row=0, column=0)
     
     # sources
         self.info_frame = Frame(self.main_frame, bg="green")
-        self.info_frame.grid(row=0, column=1, padx=10, sticky="nsew")
+        self.info_frame.grid(row=0, column=1, padx=10)
     
         self.source_label = tkinter.Label(self.info_frame, text="Current Source", font=("Arial", 16), bg="green")
         self.source_label.pack(pady=10)
@@ -41,57 +47,59 @@ class Game():
         self.canvas_frame.grid_rowconfigure(0, weight=1)
         self.canvas_frame.grid_columnconfigure(0, weight=1)
         self.info_frame.grid_rowconfigure(0, weight=1)
-        self.start_game()
+        self.start_generating_moves()
+        self.draw_table()
         self.root.bind('<Key>',self.event)  
-
-   def start_game(self):
-        self.draw_table()
         self.table.printTable()
-        self.draw_table()
+        
                
    def event(self,event):
           self.key = event.keysym
+          self.last_direction = event
           if self.key == "Up":
                self.table.controller("w")
-               self.table.printTable()
-               self.draw_table()
-               print(self.table.game_Over)
           elif self.key == "Down":
                self.table.controller("s")
-               self.table.printTable()
-               self.draw_table()
           elif self.key == "Left":
                self.table.controller("a")   
-               self.table.printTable()
-               self.draw_table()
           elif self.key == "Right":
                self.table.controller("d")   
-               self.table.printTable()
-               self.draw_table()
+          self.table.printTable()
+          self.draw_table()
           if self.table.game_Over == True:
                self.gameOver()       
+   def generate_moves_thread_func(self):
+       while self.table.game_Over == False:
+            with self.last_direction_lock:
+                direction = self.last_direction
+                if direction != "":
+                    self.event(direction)
+            time.sleep(0.7)
 
+   def start_generating_moves(self):
+        # Crear un hilo que ejecute generate_moves_thread_func()
+        self.generate_moves_thread = threading.Thread(target=self.generate_moves_thread_func)
+        self.generate_moves_thread.daemon = True  # Hacer que el hilo sea un hilo demonio para que se detenga cuando se cierre la aplicación
+        self.generate_moves_thread.start()  # Iniciar el hilo
+   
    def gameOver(self):
         self.root.unbind('<Key>')
-     # Eliminar todos los componentes en el canvas
+        scores = Scores()
+        scores.write_score(self.table.source)
         self.canvas.destroy()
-    # Eliminar todos los componentes en el info_frame
+        self.canvas_frame.destroy()
         for widget in self.info_frame.winfo_children():
           widget.destroy()
-    # Destruir los frames principales
-        self.canvas_frame.destroy()
         self.info_frame.destroy()
         self.generate_window()
 
    def draw_table(self):
         self.score_label.config(text =str(self.table.source))
-        cell_width = int(450 / self.table.YLEN)
-        cell_height = int(450 / self.table.XLEN)
+        cell_width = int(self.canvas_width / self.table.YLEN)
+        cell_height = int(self.canvas_height / self.table.XLEN)
         self.canvas.delete("all")
-        canvas_width = self.canvas.winfo_width()  # Get the current canvas width
-        canvas_height = self.canvas.winfo_height()  # Get the current canvas height
-        offset_x = (canvas_width - (self.table.YLEN * cell_width)) // 2
-        offset_y = (canvas_height - (self.table.XLEN * cell_height)) // 2
+        offset_x = (self.canvas_width - (self.table.YLEN * cell_width)) // 2
+        offset_y = (self.canvas_height - (self.table.XLEN * cell_height)) // 2
         for y in range(self.table.XLEN):
             for x in range(self.table.YLEN):
                 cell_value = self.table.table[y][x]
@@ -120,14 +128,21 @@ class Game():
                     width=0  # Set the outline width to 0 to remove the border
                 )
    def generate_window(self):
-     
+    
     self.label_game_over = tkinter.Label(self.main_frame, text="Game Over", font=("Arial", 24), bg="green")
-    self.label_game_over.pack(pady=20)
+    
     self.label_game_over.grid(row=0, column=0, columnspan=3)
 
+    self.label_score = tkinter.Label(self.main_frame, text="Your score:", font=("Arial", 24), bg="green")
+    
+    self.label_score.grid(row=1, column=0, columnspan=3,rowspan=1)
+
+    self.label_value_score = tkinter.Label(self.main_frame,  font=("Arial", 18), bg="green")
+    self.label_value_score.config(text= str(self.table.source))
+    self.label_value_score.grid(row=2, column=0, columnspan=3,rowspan=2)
     # Frame para los botones
     self.button_frame = tkinter.Frame(self.main_frame, bg="green")
-    self.button_frame.grid(row=1, column=0, columnspan=3)
+    self.button_frame.grid(row=5, column=0, columnspan=3)
 
     # Botones
     button1 = tkinter.Button(self.button_frame, text="New Game", command=self.new_game)
