@@ -22,10 +22,10 @@ class Punto():
 
 
 class Snake():
-    body = []
 
     # ------------------------------Builder-----------------------------
     def __init__(self, punto):
+        self.body = []
         if isinstance(punto,Punto):
             self.body.append(punto)
         else:
@@ -69,13 +69,14 @@ class Table():
     game_Over = False
        # -----------------------------------------Builder--------------------------------------------
     def __init__(self):
+        self.table =[[]]
+        self.table.clear()
         self.table = [[self.EMPTY for i in range(self.YLEN)] for i in range(self.XLEN)]
         self.__generaTeTable()
         print("Creado el tablero")
         self.__putSnake()
         self.__foodGenerator()
-
-
+   
     def __generaTeTable(self):
         for i in range(self.XLEN):
             for j in range(self.YLEN):

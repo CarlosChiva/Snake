@@ -22,10 +22,10 @@ class Punto():
 
 
 class Snake():
-    body = []
 
     # ------------------------------Builder-----------------------------
     def __init__(self, punto):
+        self.body = []
         if isinstance(punto,Punto):
             self.body.append(punto)
         else:
@@ -69,33 +69,14 @@ class Table():
     game_Over = False
        # -----------------------------------------Builder--------------------------------------------
     def __init__(self):
+        self.table =[[]]
+        self.table.clear()
         self.table = [[self.EMPTY for i in range(self.YLEN)] for i in range(self.XLEN)]
         self.__generaTeTable()
         print("Creado el tablero")
         self.__putSnake()
         self.__foodGenerator()
-
-    def draw_table(self, canvas):
-        cell_width = int(300 / self.YLEN)
-        cell_height = int(300 / self.XLEN)
-        for y in range(15):
-            for x in range(10):
-                cell_value = self.table[y][x]
-                color = "black"  # Por defecto, color negro (celda vacía)
-                if cell_value == self.SNAKE:
-                    color = "white"  # Color blanco para representar la serpiente
-                elif cell_value == self.FOOD:
-                    color = "red"  # Color rojo para representar la comida
-
-                canvas.create_rectangle(
-                    x * cell_width + 50,
-                    y * cell_height + 50,
-                    (x + 1) * cell_width + 50,
-                    (y + 1) * cell_height + 50,
-                    outline=color,
-                    fill=color,
-                )
-
+   
     def __generaTeTable(self):
         for i in range(self.XLEN):
             for j in range(self.YLEN):
