@@ -4,6 +4,7 @@ from clases import Table
 import time
 from scores import Scores
 import threading
+import view_score
 
 class Game():
    canvas_width= 450
@@ -85,7 +86,7 @@ class Game():
    def gameOver(self):
         self.root.unbind('<Key>')
         scores = Scores()
-        scores.write_score(self.table.source)
+        scores.write_score(new_score=self.table.source)
         self.canvas.destroy()
         self.canvas_frame.destroy()
         for widget in self.info_frame.winfo_children():
@@ -148,7 +149,7 @@ class Game():
     button1 = tkinter.Button(self.button_frame, text="New Game", command=self.new_game)
     button1.grid(row=0, column=0, padx=10, pady=45)
 
-    button2 = tkinter.Button(self.button_frame, text="View scores")
+    button2 = tkinter.Button(self.button_frame, text="View scores", command=self.load_scores)
     button2.grid(row=1, column=0, padx=10, pady=45)
 
     button3 = tkinter.Button(self.button_frame, text="Exit")
@@ -163,10 +164,20 @@ class Game():
     self.button_frame.grid_columnconfigure(2, weight=1)
 
    def new_game(self):
+        self.del_gover_window()
+        self.main_frame.destroy()
+        self.__init__(self.root)
+
+   def load_scores(self):
+        self.del_gover_window()
+        self.main_frame.destroy()
+        view_score.ViewScore(self.root)
+    
+   def del_gover_window(self):
        self.label_game_over.destroy()
            # Eliminar los botones
        for widget in self.button_frame.winfo_children():
         widget.destroy()
     # Destruir el marco de botones
        self.button_frame.destroy()
-       self.__init__(self.root)
+       
