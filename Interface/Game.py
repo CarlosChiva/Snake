@@ -152,7 +152,7 @@ class Game():
     button2 = tkinter.Button(self.button_frame, text="View scores", command=self.load_scores)
     button2.grid(row=1, column=0, padx=10, pady=45)
 
-    button3 = tkinter.Button(self.button_frame, text="Exit",command=self.exit_game)
+    button3 = tkinter.Button(self.button_frame, text="Exit",command=exit)
     button3.grid(row=2, column=0, padx=10, pady=45)
 
     # Configurar opciones de expansión para filas y columnas
@@ -162,8 +162,7 @@ class Game():
     self.button_frame.grid_columnconfigure(0, weight=1)
     self.button_frame.grid_columnconfigure(1, weight=1)
     self.button_frame.grid_columnconfigure(2, weight=1)
-   def exit_game(self):
-       exit() 
+ 
    def new_game(self):
         self.del_gover_window()
         self.main_frame.destroy()

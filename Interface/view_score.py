@@ -24,6 +24,6 @@ class ViewScore():
         boton_izquierda = tkinter.Button(self.root, text="New Game")
         boton_izquierda.grid(row=2, column=0, padx=10, pady=5, sticky=tkinter.S+tkinter.W)
 
-        boton_derecha = tkinter.Button(self.root, text="Exit")
+        boton_derecha = tkinter.Button(self.root, text="Exit",command=exit)
         boton_derecha.grid(row=2, column=1, padx=10, pady=5, sticky=tkinter.S+tkinter.E)
     
