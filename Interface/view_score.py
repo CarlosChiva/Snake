@@ -21,9 +21,9 @@ class ViewScore():
         self.root.grid_columnconfigure(1, weight=1)
 
         # Agregar botones en las esquinas inferiores
-        boton_izquierda = tkinter.Button(self.root, text="Botón Izquierda")
+        boton_izquierda = tkinter.Button(self.root, text="New Game")
         boton_izquierda.grid(row=2, column=0, padx=10, pady=5, sticky=tkinter.S+tkinter.W)
 
-        boton_derecha = tkinter.Button(self.root, text="Botón Derecha")
+        boton_derecha = tkinter.Button(self.root, text="Exit")
         boton_derecha.grid(row=2, column=1, padx=10, pady=5, sticky=tkinter.S+tkinter.E)
     
