@@ -196,6 +196,7 @@ class Game():
 
    def load_scores(self):
         self.clear_frame()
+        self.main_frame.destroy()
         view_score.ViewScore(self.root)
     
 
