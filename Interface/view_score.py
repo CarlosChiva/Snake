@@ -13,13 +13,11 @@ class ViewScore():
         self.lista_scores.grid(row=1, column=0, columnspan=2, padx=10, pady=5)
         self.lista_scores.config(justify=tkinter.CENTER)
         self.score = Scores()
-        for score in self.score.scores:
-            self.lista_scores.insert(tkinter.END, score)
+        for date, score in self.score.scores.items():
+            date_str = date.strftime("%Y-%m-%d %H:%M:%S")
+            self.lista_scores.insert(tkinter.END, f"{date_str} - Score: {score}")
         # Expandir filas y columnas para centrar los elementos
-        self.root.grid_rowconfigure(0, weight=1)
-        self.root.grid_rowconfigure(1, weight=1)
-        self.root.grid_columnconfigure(0, weight=1)
-        self.root.grid_columnconfigure(1, weight=1)
+     
 
         # Agregar botones en las esquinas inferiores
         self.boton_izquierda = tkinter.Button(self.root, text="New Game",command=self.newGame)

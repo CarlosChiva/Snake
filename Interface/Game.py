@@ -40,7 +40,7 @@ class Game():
     
     # sources
         self.info_frame = Frame(self.main_frame, bg="green")
-        self.info_frame.grid(row=0, column=1, padx=7)
+        self.info_frame.grid(row=0, column=1, padx=25)
     
         self.source_label = tkinter.Label(self.info_frame, text="Current Source", font=("Arial", 16), bg="green")
         self.source_label.pack(pady=10)
