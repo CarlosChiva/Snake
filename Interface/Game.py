@@ -69,14 +69,15 @@ class Game():
    def event(self,event):
           self.key = event.keysym
           self.last_direction = event
-          if self.key == "Up":
-               self.table.controller("w")
-          elif self.key == "Down":
-               self.table.controller("s")
-          elif self.key == "Left":
-               self.table.controller("a")   
-          elif self.key == "Right":
-               self.table.controller("d")   
+          match self.key:
+            case "Up":
+                self.table.controller("w")
+            case "Down":
+                self.table.controller("s")
+            case "Left":
+                self.table.controller("a")
+            case "Right":
+                self.table.controller("d")   
           self.table.printTable()
           self.draw_table()
           if self.table.game_Over == True:
@@ -163,6 +164,11 @@ class Game():
     self.button_frame.grid_columnconfigure(0, weight=1)
     self.button_frame.grid_columnconfigure(1, weight=1)
     self.button_frame.grid_columnconfigure(2, weight=1)
+   
+   def clear_frame(self):
+        for widgets in self.main_frame.winfo_children():
+            widgets.destroy()
+# ------------------------------Buttons Functions----------------------------------
    def pause(self):
         self.root.unbind('<Key>')
         self.stop_thread = True
@@ -186,7 +192,5 @@ class Game():
         self.clear_frame()
         view_score.ViewScore(self.root)
     
-   def clear_frame(self):
-        for widgets in self.main_frame.winfo_children():
-            widgets.destroy()
+
 
