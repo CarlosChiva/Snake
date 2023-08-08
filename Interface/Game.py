@@ -9,24 +9,28 @@ import view_score
 class Game():
    canvas_width= 450
    canvas_height= 450
+   root :tkinter
+
    def __init__(self,root):
+    self.root = root
+    self.initial_state()
+   
+   def initial_state(self):
         self.key = ""
         self.last_direction = ""
         self.last_direction_lock = threading.Lock()  # Crear un objeto de bloqueo
         self.generate_moves_thread = None
         self.score = 0
-        self.table = Table()
-        self.root = root
+        self.table = Table() 
     # main frame
         self.main_frame = Frame(self.root, bg="green")
         self.main_frame.grid(row=0, column=0, sticky="nsew")
-        self.main_frame.grid_propagate(True) 
     # canvas frame
         self.canvas_frame = Frame(self.main_frame, width=self.canvas_width, height=self.canvas_height, bg="green")
         self.canvas_frame.grid(row=0, column=0, sticky="nsew")
     
     # canvas
-        self.canvas = Canvas(self.canvas_frame, width=self.canvas_width, height=self.canvas_height, bg="green")
+        self.canvas = Canvas(self.canvas_frame, width=self.canvas_width, height=self.canvas_height, bg="black")
         self.canvas.grid(row=0, column=0)
     
     # sources
@@ -53,7 +57,7 @@ class Game():
         self.root.bind('<Key>',self.event)  
         self.table.printTable()
         
-               
+   #-----------------------controller---------------------------------------------            
    def event(self,event):
           self.key = event.keysym
           self.last_direction = event
@@ -69,6 +73,7 @@ class Game():
           self.draw_table()
           if self.table.game_Over == True:
                self.gameOver()       
+# ------------------------------Thread functions--------------------------------------------------
    def generate_moves_thread_func(self):
        while self.table.game_Over == False:
             with self.last_direction_lock:
@@ -83,17 +88,7 @@ class Game():
         self.generate_moves_thread.daemon = True  # Hacer que el hilo sea un hilo demonio para que se detenga cuando se cierre la aplicación
         self.generate_moves_thread.start()  # Iniciar el hilo
    
-   def gameOver(self):
-        self.root.unbind('<Key>')
-        scores = Scores()
-        scores.write_score(new_score=self.table.source)
-        self.canvas.destroy()
-        self.canvas_frame.destroy()
-        for widget in self.info_frame.winfo_children():
-          widget.destroy()
-        self.info_frame.destroy()
-        self.generate_window()
-
+#----------------------------------Paint Table------------------------------
    def draw_table(self):
         self.score_label.config(text =str(self.table.source))
         cell_width = int(self.canvas_width / self.table.YLEN)
@@ -128,14 +123,18 @@ class Game():
                     fill=color,
                     width=0  # Set the outline width to 0 to remove the border
                 )
+   #---------------------------------GameOver--------------------------------------------
+   def gameOver(self):
+        self.root.unbind('<Key>')
+        scores = Scores()
+        scores.write_score(new_score=self.table.source)
+        self.clear_frame()
+        self.generate_window()
+#----------------------------------------Window to Game over---------------------------------
    def generate_window(self):
-    
     self.label_game_over = tkinter.Label(self.main_frame, text="Game Over", font=("Arial", 24), bg="green")
-    
     self.label_game_over.grid(row=0, column=0, columnspan=3)
-
     self.label_score = tkinter.Label(self.main_frame, text="Your score:", font=("Arial", 24), bg="green")
-    
     self.label_score.grid(row=1, column=0, columnspan=3,rowspan=1)
 
     self.label_value_score = tkinter.Label(self.main_frame,  font=("Arial", 18), bg="green")
@@ -144,7 +143,6 @@ class Game():
     # Frame para los botones
     self.button_frame = tkinter.Frame(self.main_frame, bg="green")
     self.button_frame.grid(row=5, column=0, columnspan=3)
-
     # Botones
     button1 = tkinter.Button(self.button_frame, text="New Game", command=self.new_game)
     button1.grid(row=0, column=0, padx=10, pady=45)
@@ -164,20 +162,14 @@ class Game():
     self.button_frame.grid_columnconfigure(2, weight=1)
  
    def new_game(self):
-        self.del_gover_window()
-        self.main_frame.destroy()
-        self.__init__(self.root)
+        self.clear_frame()
+        self.initial_state()
 
    def load_scores(self):
-        self.del_gover_window()
-        self.main_frame.destroy()
+        self.clear_frame()
         view_score.ViewScore(self.root)
     
-   def del_gover_window(self):
-       self.label_game_over.destroy()
-           # Eliminar los botones
-       for widget in self.button_frame.winfo_children():
-        widget.destroy()
-    # Destruir el marco de botones
-       self.button_frame.destroy()
-       
+   def clear_frame(self):
+        for widgets in self.main_frame.winfo_children():
+            widgets.grid_forget()
+
