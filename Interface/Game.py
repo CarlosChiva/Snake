@@ -49,8 +49,7 @@ class Game():
         self.score_label.pack(pady=10)
         self.pause_button = tkinter.Button(self.info_frame,text="Pause",command=self.pause)
         self.pause_button.pack(pady=20)
-        self.button_load=tkinter.Button(self.info_frame,text="Load Game",command=self.load_game)
-        self.button_load.pack(pady=10)
+
         
         
         
@@ -173,8 +172,15 @@ class Game():
         self.root.unbind('<Key>')
         self.stop_thread = True
         self.pause_button.config(text="Resume",command=self.resume)
+        self.secondary_buttons_frame=Frame(self.info_frame,bg="green")
+        self.secondary_buttons_frame.pack(pady=10)
+        self.button_load=tkinter.Button(self.secondary_buttons_frame,text="Load Game",command=self.load_game)
+        self.button_load.pack(pady=5)
+        self.button_save=tkinter.Button(self.secondary_buttons_frame,text="Save Game",command=self.save_game)
+        self.button_save.pack(pady=5)
    def resume(self):
         self.pause_button.config(text="Pause",command=self.pause)
+        self.secondary_buttons_frame.destroy()
         self.root.bind('<Key>',self.event)  
         self.stop_thread = False
         self.start_generating_moves()
