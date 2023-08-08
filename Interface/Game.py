@@ -10,7 +10,7 @@ class Game():
    canvas_width= 450
    canvas_height= 450
    root :tkinter
-
+   stop_thread= False
    def __init__(self,root):
     self.root = root
     self.initial_state()
@@ -40,14 +40,20 @@ class Game():
     
     # sources
         self.info_frame = Frame(self.main_frame, bg="green")
-        self.info_frame.grid(row=0, column=1, padx=10)
+        self.info_frame.grid(row=0, column=1, padx=7)
     
         self.source_label = tkinter.Label(self.info_frame, text="Current Source", font=("Arial", 16), bg="green")
         self.source_label.pack(pady=10)
     
         self.score_label = tkinter.Label(self.info_frame, text="0", font=("Arial", 16), bg="green")
         self.score_label.pack(pady=10)
-
+        self.pause_button = tkinter.Button(self.info_frame,text="Pause",command=self.pause)
+        self.pause_button.pack(pady=20)
+        self.button_load=tkinter.Button(self.info_frame,text="Load Game",command=self.load_game)
+        self.button_load.pack(pady=10)
+        
+        
+        
     # Configurar las opciones de las filas y columnas para que se expandan con el cambio del tamaño de la ventana
         self.root.grid_rowconfigure(0, weight=1)
         self.root.grid_columnconfigure(0, weight=1)
@@ -77,7 +83,7 @@ class Game():
                self.gameOver()       
 # ------------------------------Thread functions--------------------------------------------------
    def generate_moves_thread_func(self):
-       while self.table.game_Over == False:
+       while self.table.game_Over == False and not self.stop_thread:
             with self.last_direction_lock:
                 direction = self.last_direction
                 if direction != "":
@@ -89,7 +95,7 @@ class Game():
         self.generate_moves_thread = threading.Thread(target=self.generate_moves_thread_func)
         self.generate_moves_thread.daemon = True  # Hacer que el hilo sea un hilo demonio para que se detenga cuando se cierre la aplicación
         self.generate_moves_thread.start()  # Iniciar el hilo
-   
+        
 #----------------------------------Paint Table------------------------------
    def draw_table(self):
         self.score_label.config(text =str(self.table.source))
@@ -142,25 +148,36 @@ class Game():
     self.label_value_score = tkinter.Label(self.main_frame,  font=("Arial", 18), bg="green")
     self.label_value_score.config(text= str(self.table.source))
     self.label_value_score.grid(row=2, column=0, columnspan=3,rowspan=2)
-    # Frame para los botones
+    # Frame to button
     self.button_frame = tkinter.Frame(self.main_frame, bg="green")
     self.button_frame.grid(row=5, column=0, columnspan=3)
-    # Botones
+    # Button
     button1 = tkinter.Button(self.button_frame, text="New Game", command=self.new_game)
     button1.grid(row=0, column=0, padx=10, pady=45)
-
     button2 = tkinter.Button(self.button_frame, text="View scores", command=self.load_scores)
     button2.grid(row=1, column=0, padx=10, pady=45)
-
     button3 = tkinter.Button(self.button_frame, text="Exit",command=exit)
     button3.grid(row=2, column=0, padx=10, pady=45)
 
-    # Configurar opciones de expansión para filas y columnas
-
+    # set expansion to row and columns
     self.button_frame.grid_columnconfigure(0, weight=1)
     self.button_frame.grid_columnconfigure(1, weight=1)
     self.button_frame.grid_columnconfigure(2, weight=1)
- 
+   def pause(self):
+        self.root.unbind('<Key>')
+        self.stop_thread = True
+        self.pause_button.config(text="Resume",command=self.resume)
+   def resume(self):
+        self.pause_button.config(text="Pause",command=self.pause)
+        self.root.bind('<Key>',self.event)  
+        self.stop_thread = False
+        self.start_generating_moves()
+
+
+   def load_game(self):
+       pass
+   def save_game(self):
+       pass
    def new_game(self):
         self.clear_frame()
         self.initial_state()
