@@ -25,7 +25,12 @@ class Game():
     # main frame
         self.main_frame = Frame(self.root, bg="green")
         self.main_frame.grid(row=0, column=0, sticky="nsew")
-    # canvas frame
+
+# Configurar cómo las filas y columnas dentro de main_frame se expanden
+        self.main_frame.grid_rowconfigure(0, weight=1)
+        self.main_frame.grid_columnconfigure(0, weight=1)    # canvas frame
+        
+        
         self.canvas_frame = Frame(self.main_frame, width=self.canvas_width, height=self.canvas_height, bg="green")
         self.canvas_frame.grid(row=0, column=0, sticky="nsew")
     
@@ -46,9 +51,6 @@ class Game():
     # Configurar las opciones de las filas y columnas para que se expandan con el cambio del tamaño de la ventana
         self.root.grid_rowconfigure(0, weight=1)
         self.root.grid_columnconfigure(0, weight=1)
-        self.main_frame.grid_rowconfigure(0, weight=1)
-        self.main_frame.grid_columnconfigure(0, weight=1)
-        self.main_frame.grid_columnconfigure(1, weight=1)
         self.canvas_frame.grid_rowconfigure(0, weight=1)
         self.canvas_frame.grid_columnconfigure(0, weight=1)
         self.info_frame.grid_rowconfigure(0, weight=1)
@@ -154,9 +156,7 @@ class Game():
     button3.grid(row=2, column=0, padx=10, pady=45)
 
     # Configurar opciones de expansión para filas y columnas
-    self.root.grid_rowconfigure(0, weight=1)
-    self.root.grid_rowconfigure(1, weight=1)
-    self.root.grid_columnconfigure(0, weight=1)
+
     self.button_frame.grid_columnconfigure(0, weight=1)
     self.button_frame.grid_columnconfigure(1, weight=1)
     self.button_frame.grid_columnconfigure(2, weight=1)
@@ -171,5 +171,5 @@ class Game():
     
    def clear_frame(self):
         for widgets in self.main_frame.winfo_children():
-            widgets.grid_forget()
+            widgets.destroy()
 
