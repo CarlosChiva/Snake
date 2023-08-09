@@ -65,7 +65,7 @@ class Table():
     EMPTY = 0
     FOOD = 2
     SNAKE = 1
-    source = 0
+    score = 0
     game_Over = False
        # -----------------------------------------Builder--------------------------------------------
     def __init__(self):
@@ -118,7 +118,7 @@ class Table():
         return self.snakeBody.getYPoint()
 
     def __sumScore(self):
-        self.source += 100
+        self.score += 100
     # --------------------------------------getter---------------------------------------------
     def getTable(self):
         return self.table
@@ -212,7 +212,7 @@ class Table():
     def gameOver(self):
         self.game_Over = True
         print("Game Over")
-        print("Your source: " + str(self.source))
+        print("Your source: " + str(self.score))
 
 
     # ------------------------------------Personal Printer--------------------------------

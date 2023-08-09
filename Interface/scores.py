@@ -9,12 +9,12 @@ class Scores():
         current_date = datetime.datetime.now()
         self.scores[current_date] = new_score
 
-        with open("Scores", "wb") as file:
+        with open("Interface/Scores", "wb") as file:
             pickle.dump(self.scores, file)
     
     def __read_scores(self):
         try:
-            with open("Scores", "rb") as file:
+            with open("Interface/Scores", "rb") as file:
                 scores = pickle.load(file)
             
         except FileNotFoundError:

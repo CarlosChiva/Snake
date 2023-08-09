@@ -17,7 +17,7 @@ class ViewScore():
         self.main_frame.grid_columnconfigure(0, weight=1)
         
         
-        self.etiqueta_titulo = tkinter.Label(self.main_frame, text="Scores", font=("Helvetica", 16, "bold"))
+        self.etiqueta_titulo = tkinter.Label(self.main_frame, text="Scores", font=("Helvetica", 16, "bold"),bg="green")
         self.etiqueta_titulo.grid(row=0, column=0, columnspan=2, pady=5,sticky="n")
         self.lista_scores = tkinter.Listbox(self.main_frame, font=("Helvetica", 12), width=30)
         self.lista_scores.grid(row=1, column=0, columnspan=2, padx=10, pady=100,sticky="n")

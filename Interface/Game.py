@@ -98,7 +98,7 @@ class Game():
         
 #----------------------------------Paint Table------------------------------
    def draw_table(self):
-        self.score_label.config(text =str(self.table.source))
+        self.score_label.config(text =str(self.table.score))
         cell_width = int(self.canvas_width / self.table.YLEN)
         cell_height = int(self.canvas_height / self.table.XLEN)
         self.canvas.delete("all")
@@ -135,7 +135,7 @@ class Game():
    def gameOver(self):
         self.root.unbind('<Key>')
         scores = Scores()
-        scores.write_score(new_score=self.table.source)
+        scores.write_score(new_score=self.table.score)
         self.clear_frame()
         self.generate_window()
 #----------------------------------------Window to Game over---------------------------------
@@ -146,7 +146,7 @@ class Game():
     self.label_score.grid(row=1, column=0, columnspan=3,rowspan=1)
 
     self.label_value_score = tkinter.Label(self.main_frame,  font=("Arial", 18), bg="green")
-    self.label_value_score.config(text= str(self.table.source))
+    self.label_value_score.config(text= str(self.table.score))
     self.label_value_score.grid(row=2, column=0, columnspan=3,rowspan=2)
     # Frame to button
     self.button_frame = tkinter.Frame(self.main_frame, bg="green")
