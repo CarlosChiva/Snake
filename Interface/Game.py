@@ -1,5 +1,6 @@
 from tkinter import Canvas, Frame, Tk
 import tkinter
+from save_load_game import Save_load_game
 from clases import Table
 import time
 from scores import Scores
@@ -189,7 +190,9 @@ class Game():
    def load_game(self):
        pass
    def save_game(self):
-       pass
+       save_game= Save_load_game()
+       save_game.save_game(self.table)
+       save_game.get_scores()
    def new_game(self):
         self.clear_frame()
         self.initial_state()
