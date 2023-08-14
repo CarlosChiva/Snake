@@ -8,15 +8,15 @@ import threading
 import view_score
 
 class Game():
-   canvas_width= 450
-   canvas_height= 450
-   root :tkinter
-   stop_thread= False
-   def __init__(self,root):
-    self.root = root
-    self.initial_state()
+    canvas_width= 450
+    canvas_height= 450
+    root :tkinter
+    stop_thread= False
+    def __init__(self,root):
+        self.root = root
+        self.initial_state()
    
-   def initial_state(self):
+    def initial_state(self):
         self.key = ""
         self.last_direction = ""
         self.last_direction_lock = threading.Lock()  # Crear un objeto de bloqueo
@@ -66,7 +66,7 @@ class Game():
         self.table.printTable()
         
    #-----------------------controller---------------------------------------------            
-   def event(self,event):
+    def event(self,event):
           self.key = event.keysym
           self.last_direction = event
           match self.key:
@@ -83,7 +83,7 @@ class Game():
           if self.table.game_Over == True:
                self.gameOver()       
 # ------------------------------Thread functions--------------------------------------------------
-   def generate_moves_thread_func(self):
+    def generate_moves_thread_func(self):
        while self.table.game_Over == False and not self.stop_thread:
             with self.last_direction_lock:
                 direction = self.last_direction
@@ -91,14 +91,14 @@ class Game():
                     self.event(direction)
             time.sleep(0.7)
 
-   def start_generating_moves(self):
+    def start_generating_moves(self):
         # Crear un hilo que ejecute generate_moves_thread_func()
         self.generate_moves_thread = threading.Thread(target=self.generate_moves_thread_func)
         self.generate_moves_thread.daemon = True  # Hacer que el hilo sea un hilo demonio para que se detenga cuando se cierre la aplicación
         self.generate_moves_thread.start()  # Iniciar el hilo
         
 #----------------------------------Paint Table------------------------------
-   def draw_table(self):
+    def draw_table(self):
         self.score_label.config(text =str(self.table.score))
         cell_width = int(self.canvas_width / self.table.YLEN)
         cell_height = int(self.canvas_height / self.table.XLEN)
@@ -133,43 +133,43 @@ class Game():
                     width=0  # Set the outline width to 0 to remove the border
                 )
    #---------------------------------GameOver--------------------------------------------
-   def gameOver(self):
+    def gameOver(self):
         self.root.unbind('<Key>')
         scores = Scores()
         scores.write_score(new_score=self.table.score)
         self.clear_frame()
         self.generate_window()
 #----------------------------------------Window to Game over---------------------------------
-   def generate_window(self):
-    self.label_game_over = tkinter.Label(self.main_frame, text="Game Over", font=("Arial", 24), bg="green")
-    self.label_game_over.grid(row=0, column=0, columnspan=3)
-    self.label_score = tkinter.Label(self.main_frame, text="Your score:", font=("Arial", 24), bg="green")
-    self.label_score.grid(row=1, column=0, columnspan=3,rowspan=1)
+    def generate_window(self):
+        self.label_game_over = tkinter.Label(self.main_frame, text="Game Over", font=("Arial", 24), bg="green")
+        self.label_game_over.grid(row=0, column=0, columnspan=3)
+        self.label_score = tkinter.Label(self.main_frame, text="Your score:", font=("Arial", 24), bg="green")
+        self.label_score.grid(row=1, column=0, columnspan=3,rowspan=1)
 
-    self.label_value_score = tkinter.Label(self.main_frame,  font=("Arial", 18), bg="green")
-    self.label_value_score.config(text= str(self.table.score))
-    self.label_value_score.grid(row=2, column=0, columnspan=3,rowspan=2)
-    # Frame to button
-    self.button_frame = tkinter.Frame(self.main_frame, bg="green")
-    self.button_frame.grid(row=5, column=0, columnspan=3)
-    # Button
-    button1 = tkinter.Button(self.button_frame, text="New Game", command=self.new_game)
-    button1.grid(row=0, column=0, padx=10, pady=45)
-    button2 = tkinter.Button(self.button_frame, text="View scores", command=self.load_scores)
-    button2.grid(row=1, column=0, padx=10, pady=45)
-    button3 = tkinter.Button(self.button_frame, text="Exit",command=exit)
-    button3.grid(row=2, column=0, padx=10, pady=45)
+        self.label_value_score = tkinter.Label(self.main_frame,  font=("Arial", 18), bg="green")
+        self.label_value_score.config(text= str(self.table.score))
+        self.label_value_score.grid(row=2, column=0, columnspan=3,rowspan=2)
+        # Frame to button
+        self.button_frame = tkinter.Frame(self.main_frame, bg="green")
+        self.button_frame.grid(row=5, column=0, columnspan=3)
+        # Button
+        button1 = tkinter.Button(self.button_frame, text="New Game", command=self.new_game)
+        button1.grid(row=0, column=0, padx=10, pady=45)
+        button2 = tkinter.Button(self.button_frame, text="View scores", command=self.load_scores)
+        button2.grid(row=1, column=0, padx=10, pady=45)
+        button3 = tkinter.Button(self.button_frame, text="Exit",command=exit)
+        button3.grid(row=2, column=0, padx=10, pady=45)
 
-    # set expansion to row and columns
-    self.button_frame.grid_columnconfigure(0, weight=1)
-    self.button_frame.grid_columnconfigure(1, weight=1)
-    self.button_frame.grid_columnconfigure(2, weight=1)
+        # set expansion to row and columns
+        self.button_frame.grid_columnconfigure(0, weight=1)
+        self.button_frame.grid_columnconfigure(1, weight=1)
+        self.button_frame.grid_columnconfigure(2, weight=1)
    
-   def clear_frame(self):
+    def clear_frame(self):
         for widgets in self.main_frame.winfo_children():
             widgets.destroy()
 # ------------------------------Buttons Functions----------------------------------
-   def pause(self):
+    def pause(self):
         self.root.unbind('<Key>')
         self.stop_thread = True
         self.pause_button.config(text="Resume",command=self.resume)
@@ -179,7 +179,7 @@ class Game():
         self.button_load.pack(pady=5)
         self.button_save=tkinter.Button(self.secondary_buttons_frame,text="Save Game",command=self.save_game)
         self.button_save.pack(pady=5)
-   def resume(self):
+    def resume(self):
         self.pause_button.config(text="Pause",command=self.pause)
         self.secondary_buttons_frame.destroy()
         self.root.bind('<Key>',self.event)  
@@ -187,20 +187,36 @@ class Game():
         self.start_generating_moves()
 
 
-   def load_game(self):
-       pass
-   def save_game(self):
+    def load_game(self):
+       self.list_of_games()
+    def save_game(self):
        save_game= Save_load_game()
        save_game.save_game(self.table)
        save_game.get_scores()
-   def new_game(self):
+    def new_game(self):
         self.clear_frame()
         self.initial_state()
 
-   def load_scores(self):
+    def load_scores(self):
         self.clear_frame()
         self.main_frame.destroy()
         view_score.ViewScore(self.root)
-    
 
+    def list_of_games(self):
+        for i in self.info_frame.winfo_children():
+           i.destroy()
+        self.lista_scores = tkinter.Listbox(self.info_frame, font=("Helvetica", 12), width=30)
+        self.lista_scores.pack(pady=10)
+        self.lista_scores.config(justify=tkinter.CENTER)
+
+        self.games = Save_load_game()
+        self.list_games= self.games.get_scores()
+        for index,value in enumerate(self.list_games.values()):
+            user_index = index +1
+            self.lista_scores.insert(tkinter.END,f"{user_index}---{value}")
+        self.lista_scores.bind("<Button-1>",self.print_selection)
+    def print_selection(self,event):    
+        selected_index = self.lista_scores.nearest(event.y)
+        #selected_item = self.lista_scores.get(selected_index)
+        #print(f"index:---{selected_index} item:----{selected_item}")
 

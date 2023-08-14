@@ -22,5 +22,6 @@ class Save_load_game():
             user_index= index+1
             print(f"{user_index}------------{table.score}")
             list_scores[index] = table.score
+        return list_scores    
     def load_game(self, number):
         return self.list_of_games[number-1]        
