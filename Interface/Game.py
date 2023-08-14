@@ -12,6 +12,8 @@ class Game():
     canvas_height= 450
     root :tkinter
     stop_thread= False
+    score = 0
+    table = Table()
     def __init__(self,root):
         self.root = root
         self.initial_state()
@@ -21,8 +23,7 @@ class Game():
         self.last_direction = ""
         self.last_direction_lock = threading.Lock()  # Crear un objeto de bloqueo
         self.generate_moves_thread = None
-        self.score = 0
-        self.table = Table() 
+ 
     # main frame
         self.main_frame = Frame(self.root, bg="green")
         self.main_frame.grid(row=0, column=0, sticky="nsew")
@@ -42,17 +43,12 @@ class Game():
     # sources
         self.info_frame = Frame(self.main_frame, bg="green")
         self.info_frame.grid(row=0, column=1, padx=25)
-    
         self.source_label = tkinter.Label(self.info_frame, text="Current Source", font=("Arial", 16), bg="green")
         self.source_label.pack(pady=10)
-    
         self.score_label = tkinter.Label(self.info_frame, text="0", font=("Arial", 16), bg="green")
         self.score_label.pack(pady=10)
         self.pause_button = tkinter.Button(self.info_frame,text="Pause",command=self.pause)
         self.pause_button.pack(pady=20)
-
-        
-        
         
     # Configurar las opciones de las filas y columnas para que se expandan con el cambio del tamaño de la ventana
         self.root.grid_rowconfigure(0, weight=1)
@@ -217,6 +213,10 @@ class Game():
         self.lista_scores.bind("<Button-1>",self.print_selection)
     def print_selection(self,event):    
         selected_index = self.lista_scores.nearest(event.y)
+        self.load_selected_game(self.games.list_of_games[selected_index])
         #selected_item = self.lista_scores.get(selected_index)
         #print(f"index:---{selected_index} item:----{selected_item}")
-
+    def load_selected_game(self,table):
+        self.table = table
+        self.stop_thread = False
+        self.initial_state()    
