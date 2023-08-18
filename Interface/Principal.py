@@ -1,6 +1,7 @@
 from tkinter import *
 from Game import Game
 from view_score import ViewScore
+from load_games_view import Load_games_view
 
 def buildGame():
         destroy_main_frames()
@@ -10,6 +11,7 @@ def build_view_score():
         view_score = ViewScore(root)                        
 def build_load_game():
         destroy_main_frames()
+        load_game = Load_games_view(root)
 def destroy_main_frames():
         frame1.destroy()
         frame2.destroy()

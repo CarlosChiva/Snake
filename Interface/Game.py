@@ -14,8 +14,10 @@ class Game():
     stop_thread= False
     score = 0
     table = Table()
-    def __init__(self,root):
+    def __init__(self,root,table =None):
         self.root = root
+        if table is not None:
+            self.table = table
         self.initial_state()
    
     def initial_state(self):
