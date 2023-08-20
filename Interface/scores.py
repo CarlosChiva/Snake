@@ -16,7 +16,6 @@ class Scores():
         try:
             with open("Interface/Scores", "rb") as file:
                 scores = pickle.load(file)
-            
         except FileNotFoundError:
             scores = {}
         return scores

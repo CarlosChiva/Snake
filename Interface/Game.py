@@ -14,10 +14,12 @@ class Game():
     stop_thread= False
     score = 0
     table = Table()
-    def __init__(self,root,table =None):
+    def __init__(self,root,table=None):
         self.root = root
         if table is not None:
             self.table = table
+        else:
+            self.table = Table()
         self.initial_state()
    
     def initial_state(self):
@@ -193,6 +195,7 @@ class Game():
        save_game.get_scores()
     def new_game(self):
         self.clear_frame()
+        self.table = Table()
         self.initial_state()
 
     def load_scores(self):

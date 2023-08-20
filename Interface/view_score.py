@@ -24,10 +24,14 @@ class ViewScore():
         self.lista_scores.config(justify=tkinter.CENTER)
   
         self.score = Scores()
+        index = 0
         for date, score in self.score.get_scores().items():
-            date_str = date.strftime("%Y-%m-%d %H:%M:%S")
-            self.lista_scores.insert(tkinter.END, f"{date_str} - Score: {score}")
-     
+            index += 1
+            date_str = date.strftime("%m-%d %H:%M:%S")
+            if index <=10:
+                self.lista_scores.insert(tkinter.END, f"{date_str} - Score: {score}")
+            else:
+                break
 
         # Agregar botones en las esquinas inferiores
         self.boton_izquierda = tkinter.Button(self.main_frame, text="New Game",command=self.newGame)
