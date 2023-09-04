@@ -5,7 +5,7 @@ from clases import Table
 import time
 from scores import Scores
 import threading
-import view_score
+
 
 class Game():
     canvas_width= 450
@@ -14,8 +14,9 @@ class Game():
     stop_thread= False
     score = 0
     table = Table()
-    def __init__(self,root,table=None):
+    def __init__(self,root,change_window,table=None):
         self.root = root
+        self.function= change_window
         if table is not None:
             self.table = table
         else:
@@ -193,6 +194,10 @@ class Game():
        save_game= Save_load_game()
        save_game.save_game(self.table)
        save_game.get_scores()
+       self.clear_frame()
+       self.main_frame.destroy()
+       self.function("principal")
+
     def new_game(self):
         self.clear_frame()
         self.table = Table()
@@ -201,7 +206,7 @@ class Game():
     def load_scores(self):
         self.clear_frame()
         self.main_frame.destroy()
-        view_score.ViewScore(self.root)
+        self.function("load_game")
 
     def list_of_games(self):
         for i in self.info_frame.winfo_children():

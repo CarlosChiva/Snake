@@ -4,8 +4,9 @@ from Game import Game
 
 class Load_games_view():
     root:tkinter
-    def __init__(self, root):
+    def __init__(self, root,change_window):
         self.root = root 
+        self.function= change_window
         self.root.grid_rowconfigure(0, weight=1)
         self.root.grid_columnconfigure(0, weight=1)
         # main frame
@@ -34,4 +35,4 @@ class Load_games_view():
         #selected_item = self.lista_scores.get(selected_index)
         #print(f"index:---{selected_index} item:----{selected_item}")
     def load_selected_game(self,table):
-        game = Game(self.root,table)            
+        self.function(table)

@@ -4,8 +4,9 @@ import Game
 from scores import Scores
 
 class ViewScore():
-    def __init__(self,root):
+    def __init__(self,root,change_window):
         self.root = root 
+        self.function= change_window
         self.root.grid_rowconfigure(0, weight=1)
         self.root.grid_columnconfigure(0, weight=1)
         # main frame
@@ -44,4 +45,4 @@ class ViewScore():
         self.lista_scores.destroy()
         self.boton_izquierda.destroy()
         self.boton_derecha.destroy()
-        game = Game.Game(self.root)
+        self.function("game")

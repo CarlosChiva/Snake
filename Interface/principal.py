@@ -1,13 +1,9 @@
 from tkinter import *
-from Game import Game
-from view_score import ViewScore
-from load_games_view import Load_games_view
 
-
-
-class Pincipal():
-        def __init__(self,root):
+class Principal():
+        def __init__(self,root,change_window):
                 self.root = root
+                self.function = change_window
                 self.frame1 = Frame(self.root, width=700, height=500, background="white")
                 self.frame2 = Frame(self.frame1, width=100, height=100)
                 self.secondLabel = Label(self.frame1, text="Welcome", fg="red", font=("Arial", 18))
@@ -25,10 +21,10 @@ class Pincipal():
                 self.frame2.destroy()
         def buildGame(self):
                 self.destroy_main_frames()
-                game = Game(self.root)     
+                self.function("game")     
         def build_view_score(self):
                 self.destroy_main_frames()
-                view_score = ViewScore(self.root)                        
+                self.function("score")
         def build_load_game(self):
                 self.destroy_main_frames()
-                load_game = Load_games_view(self.root)
+                self.function("load_game")
