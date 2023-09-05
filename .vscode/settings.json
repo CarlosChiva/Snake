@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
-        "./clases/data_class"
+        "./clases/data_class",
+        "./Interface"
     ]
 }

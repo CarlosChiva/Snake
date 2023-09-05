@@ -1,6 +1,6 @@
 from tkinter import Canvas, Frame, Tk
 import tkinter
-from scores import Scores
+from .scores import Scores
 
 class ViewScore():
     def __init__(self,root,change_window):

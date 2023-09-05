@@ -1,5 +1,5 @@
 from tkinter import *
-from windows_provider import Windows_provider
+from Interface.windows_provider import Windows_provider
 root = Tk()
 root.title("Snake")
 #root.iconbitmap("/home/dread/VsCode/Snake/Interface/snake.ico")

@@ -1,6 +1,6 @@
 import tkinter
-from save_load_game import Save_load_game
-from Game import Game
+from .save_load_game import Save_load_game
+from .Game import Game
 
 class Load_games_view():
     root:tkinter

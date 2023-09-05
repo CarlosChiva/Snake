@@ -1,5 +1,5 @@
 import pickle
-from clases.clases import Table
+from .clases.clases import *
 class Save_load_game():
     def __init__(self):
         self.list_of_games : [Table] = self.__read_games() 

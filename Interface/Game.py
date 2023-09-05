@@ -1,10 +1,10 @@
 from tkinter import Canvas, Frame, Tk
 import tkinter
 import time
-from scores import Scores
+from .scores import Scores
 import threading
-from clases.clases import Table
-from save_load_game import Save_load_game
+from .clases.clases import Table
+from .save_load_game import Save_load_game
 
 
 
