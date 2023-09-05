@@ -1,5 +1,5 @@
-from principal import Principal
 from Game import Game
+from principal import Principal
 from view_score import ViewScore
 from load_games_view import Load_games_view
 class Windows_provider():

@@ -1,6 +1,5 @@
 from tkinter import Canvas, Frame, Tk
 import tkinter
-import Game
 from scores import Scores
 
 class ViewScore():

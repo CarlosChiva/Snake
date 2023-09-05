@@ -1,8 +1,0 @@
-__init__.py
-clases.py
-main.py
-setup.py
-Paquete_Clases.egg-info/PKG-INFO
-Paquete_Clases.egg-info/SOURCES.txt
-Paquete_Clases.egg-info/dependency_links.txt
-Paquete_Clases.egg-info/top_level.txt
